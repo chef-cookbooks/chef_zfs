@@ -78,7 +78,7 @@ def zfs_exist?(name)
   cmd = Mixlib::ShellOut.new('zfs', 'get', 'mountpoint', name)
   cmd.environment['PATH'] = "/usr/sbin:#{ENV['PATH']}" if platform_family?('solaris2')
   cmd.run_command
-  cmd.exitstatus == 0 ? true : false
+  cmd.exitstatus == 0
 end
 
 def zfs_get_properties(name)
