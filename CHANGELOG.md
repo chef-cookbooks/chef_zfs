@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the chef_zfs cookbook.
 
+## 1.0.14 (2018-08-13)
+
+- Avoid setting attributes with the ZFS cli if they're already set
+
 ## 1.0.1 (2018-03-02)
 
 - Fix a few readme typos
@@ -14,4 +18,3 @@ This file is used to list changes made in each version of the chef_zfs cookbook.
 - Updated testing with additional platforms and replaced Rake with Delivery local mode
 - Expanded the readme documentation for the resource and requirments
 - Resolved Foodcritic and Cookstyle warnings
-
