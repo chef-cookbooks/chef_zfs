@@ -89,6 +89,21 @@ def zfs_get_properties(name)
   cmd.stdout
 end
 
+# Helper method to check if a filesystem property is already set
+# so that we don't call zfs set when it's unnecessary.
+# @param [String] ZFS Name
+# @param [Hash] ZFS Property => value
+# @return [Boolean]
+def zfs_property_already_set?(fs, property)
+    key = property.keys[0] 
+    new_value = property[property.keys[0]]
+    cmd = Mixlib::ShellOut.new('zfs', 'get', key.to_s, fs)
+    cmd.run_command
+    existing_property = parse_zfs_properties(cmd.stdout)[0]
+    existing_value = existing_property[existing_property.keys[0]]
+    existing_value == new_value
+end
+
 # TODO: Add support for setting inheritance from parent filesystems.
 # @param [String] ZFS Name
 # @param [Hash] ZFS Property => value
@@ -102,6 +117,7 @@ def zfs_set_properties(fs, properties)
 
   configurable_properties.each do |setting|
     next if PROPERTIES_VALID_ONLY_AT_CREATE.include?(setting.keys[0])
+    next if zfs_property_already_set?(fs, setting) 
     cmd = Mixlib::ShellOut.new('zfs', 'set', "#{setting.keys[0]}=#{setting[setting.keys[0]]}", fs)
     cmd.environment['PATH'] = "/usr/sbin:#{ENV['PATH']}" if platform_family?('solaris2')
     cmd.run_command
