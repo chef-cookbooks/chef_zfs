@@ -1,4 +1,4 @@
-# chef_zpool Cookbook
+# chef_zfs Cookbook
 
 [![Build Status](https://travis-ci.org/chef-cookbooks/chef_zfs.svg?branch=master)](https://travis-ci.org/chef-cookbooks/chef_zfs) [![Cookbook Version](https://img.shields.io/cookbook/v/chef_zfs.svg)](https://supermarket.chef.io/cookbooks/chef_zfs)
 
